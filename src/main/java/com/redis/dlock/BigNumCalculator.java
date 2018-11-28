@@ -67,4 +67,30 @@ public class BigNumCalculator {
 
         return result.toString();
     }
+
+    public static String multiply(String a, String b) {
+        char[] arrayA = a.toCharArray();
+        char[] arrayB = b.toCharArray();
+        int maxLength = arrayA.length + arrayB.length;
+        int[] result = new int[maxLength];
+
+        for (int i = 0; i < arrayA.length; i++) {
+            for (int j = 0; j < arrayB.length; j++) {
+                result[i+j] += (arrayA[i] - '0') * (arrayB[j] - '0');
+            }
+        }
+
+        for (int i = result.length - 1; i > 0; i--) {
+         if (result[i] >= 10) {
+             result[i-1] += result[i] / 10;
+             result[i] %= 10;
+         }
+        }
+
+        StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < maxLength - 1; i++) {
+                sb.append(result[i]);
+            }
+        return sb.toString();
+    }
 }

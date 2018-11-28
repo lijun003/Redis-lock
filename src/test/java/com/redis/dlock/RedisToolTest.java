@@ -3,15 +3,15 @@ package com.redis.dlock;
 import org.junit.Assert;
 import org.junit.Test;
 
-import redis.clients.jedis.Jedis;
-
 public class RedisToolTest {
     @Test
     public void testJedis() {
-        Jedis jedis = new Jedis("localhost", 6379);
-        boolean lock = RedisLock.getLock(jedis, "key1", "123", 3000);
+        boolean lock = RedisLock.getLock("key1", "123", 3000);
         Assert.assertTrue(lock);
-        boolean released = RedisLock.releaseLock(jedis, "key1", "123");
+        boolean key1 = RedisLock.getLock("key1", "123", 3000);
+        Assert.assertEquals(false, key1);
+        boolean released = RedisLock.releaseLock("key1", "123");
         Assert.assertTrue(released);
+        Assert.assertEquals(true, RedisLock.getLock("key1", "123", 3000));
     }
 }
